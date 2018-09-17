@@ -1,0 +1,40 @@
+<p ng-show="Profile.length == 0">Not result found</p>
+
+<div class="container" style="background-color: whitesmoke; width: 350px ; ">
+<div ng-repeat="Profile in ProfileData" >
+
+
+    <div class="card" >
+
+
+        <button><h1>Stylist Profile</h1></button>
+        <img src={{Profile.imageUrl}} alt="Stylist" style="width:100%">
+        <h1>{{Profile.stylistFirstName}} {{Profile.stylistLastName}}</h1>
+        <p class="title"><b>{{Profile.prices[0].services[0].serviceName}}</b><br></p>
+        <p> Related Price : ${{Profile.prices[0].price}}</p>
+        <p> Country : {{Profile.country}}</p>
+        <p> Gender : {{Profile.gender}}</p>
+        <p> Contact : {{Profile.mobileNo}}</p>
+        <p> Email : {{Profile.email}}</p>
+
+
+        <span class="heading">Stylist Rating </span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+
+
+        <div style="margin: 24px 0;">
+            <a href="#"><i class="fa fa-dribbble"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-facebook"></i></a>
+        </div>
+        <p>
+            <button style="color: cornflowerblue">Book Now</button>
+        </p>
+    </div>
+</div>
+    </div>

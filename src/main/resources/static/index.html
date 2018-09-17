@@ -1,0 +1,188 @@
+<!doctype html>
+<html ng-app="searchModule">
+<head>
+    <title>my AngularJS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+
+    <link rel="stylesheet" href="css/sm.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="app.js"></script>
+
+
+</head>
+<!--nav bar-->
+<body>
+<div ng-controller="SearchController">
+<nav class="navbar navbar-inverse ">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand " href="#">PlUZ SALON</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Stylist</a></li>
+            <li><a href="#">Services</a></li>
+        </ul>
+        <div class="navbar-form navbar-right">
+            <div class="input-group">
+                <input  onkeyup="openNav()"  ng-change="search(myInput)" ng-model="myInput"
+                         placeholder="What are you locking for?" type="text" class="form-control"  name="search">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" ng-click="search(myInput)" onclick="openNav()" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<!--    left nav-->
+
+    <div class="lsidenav">
+
+        <a href="#">Stylists</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+        <a href="#">About</a>
+    </div>
+
+<!--
+Right side nav-->
+    <div id="mySidenav" class="sidenav container-fluid" >
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a><br>
+        <div class="btn-group" role="group">
+
+        <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal" >Advance Search</button>
+        <div>
+        </div>
+            <br>
+
+
+
+            <div class="table-container ">
+                <table class="table table-bordered table-dark">
+                    <tbody>
+                   <p class="result text-center"   ng-repeat="result in results | limitTo:1"><b style="color: red">{{results.length}} </b>result(s) were found
+                        for the search for
+                        <b style="color: red">{{myInput}}</b></p>
+                <p class="result text-center" ng-show="results.length == 0">Your search - <b style="color: red">{{myInput}}</b> - did not match any stylist
+                        details.</p>
+
+                    <tr ng-repeat="result in results | limitTo : 10">
+
+
+                        <td>
+                            <a  style="text-decoration:none;color:inherit" ng-href="#!profile"
+                                ng-click="ProfileView(result.stylistId)">
+                                <img ng-src= {{result.imageUrl}} height="50" width="50" alt="image" style="border-radius: 50%;">
+                               <p class="result"> <b>{{result.prices[0].services[0].serviceName}} </b><br>
+
+                                   {{result.stylistFirstName}}
+                                {{result.stylistLastName}} is  from
+                                {{result.country}}
+                               </p>
+
+                            </a></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <!-- Video -->
+    <video controls="" autoplay="" loop="" muted>
+        <source src="videos/salon.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="container">
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"> Advance Search</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="input ">
+                            <input ng-model="Country"
+                                   placeholder="By Country" type="text" class="form-control">
+
+                            <br>
+                            <input ng-model="City"
+                                   placeholder="By City" type="text" class="form-control">
+
+                            <br>
+                            <input ng-model="Price"
+                                   placeholder="By Price $" type="text" class="form-control">
+
+
+                            <br> <label>By Gender</label>
+
+                            <select class="form-control" ng-model="gender">
+                                <option value="All">All</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select><br>
+
+                            <!--   <input type="date" name="date" class="form-control" ng-model="date">-->
+                            <br>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button ng-click="searchAll(Country,City,Price,gender)" onclick="openNav()"  data-dismiss="modal">Search</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "350px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+
+
+
+    <div style="background-color: dimgray" ng-view></div>
+
+</div>
+
+
+
+
+
+
+</body>
+</html>
